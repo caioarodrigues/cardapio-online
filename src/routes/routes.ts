@@ -10,6 +10,10 @@ app.use('/empresa', empresaRoutes);
 app.use('/cardapio', cardapioRoutes);
 app.use('/usuario', usuarioRoutes);
 
-app.listen(porta, () => {
-    console.log(`Backend executando em ${porta}...`);
-});
+function init(): void{
+    app.listen(porta, () => {
+        console.log(`Backend executando em ${porta}...`);
+    });
+}
+
+export default app;

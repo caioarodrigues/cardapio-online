@@ -2,13 +2,14 @@ import ICardapio from "../interfaces/ICardapio";
 import { Cardapio } from "../types/CardapioType";
 import CardapioController from "../controllers/CardapioController";
 import { Item } from "../types/ItemType";
+import { CardapioException } from "../exceptions/CardapioException";
 
 export default class CardapioAbstract implements ICardapio{
+    private cardapioController = CardapioController.criaController();
     nomeEmpresa: string;
     telefoneEmpresa: number;
     id: number;
     itens: Item[];
-    private cardapioController = CardapioController.criaController();
 
     protected constructor(cardapio: Cardapio){
         const { nomeEmpresa, telefoneEmpresa, itens } = cardapio;
@@ -18,9 +19,19 @@ export default class CardapioAbstract implements ICardapio{
         this.itens = itens;
         this.id = 0;
     }
-    getCardapio(id: number): Cardapio {
+    async getCardapio(id: number): Promise <Cardapio | CardapioException> {
+        const esteCardapio = await this.cardapioController.getCardapio(id);
+
+        if(!esteCardapio){
+            return {
+                errMsg: {
+                    msg: 'Cardápio não encontrado',
+                    id: 3
+                }
+            }
+        }
         
-        throw new Error("Method not implemented.");
+        return esteCardapio;
     }
     
 }
