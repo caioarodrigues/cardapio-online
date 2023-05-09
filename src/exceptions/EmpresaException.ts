@@ -3,6 +3,6 @@ type errMsg = {
     id?: number;
 }
 
-export type CardapioException = {
+export type EmpresaException = {
     errMsg: errMsg;
 }
